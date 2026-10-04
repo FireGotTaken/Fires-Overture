@@ -1,6 +1,11 @@
 package net.fire.overture;
 
 import com.mojang.logging.LogUtils;
+import net.fire.overture.block.ModBlocks;
+import net.fire.overture.item.ModCreativeModeTabs;
+import net.fire.overture.item.ModItems;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -26,6 +31,11 @@ public class OvertureMod
     {
         IEventBus modEventBus = context.getModEventBus();
 
+        ModCreativeModeTabs.register(modEventBus);
+
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -38,7 +48,9 @@ public class OvertureMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-
+        event.enqueueWork(() -> {
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.ALCHEMICAL_ROSE.getId(), ModBlocks.POTTED_ALCHEMICAL_ROSE);
+        });
     }
 
     // Add the example block item to the building blocks tab
