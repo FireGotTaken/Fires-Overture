@@ -2,6 +2,7 @@ package net.fire.overture;
 
 import com.mojang.logging.LogUtils;
 import net.fire.overture.block.ModBlocks;
+import net.fire.overture.datagen.ModBlockEntities;
 import net.fire.overture.item.ModCreativeModeTabs;
 import net.fire.overture.item.ModItems;
 import net.minecraft.world.level.block.Blocks;
@@ -35,6 +36,7 @@ public class OvertureMod
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);

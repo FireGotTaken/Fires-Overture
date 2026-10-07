@@ -1,13 +1,14 @@
 package net.fire.overture.block;
 
 import net.fire.overture.OvertureMod;
+import net.fire.overture.block.custom.AlchemicalRose;
+import net.fire.overture.block.custom.PottedAlchemicalRose;
 import net.fire.overture.item.ModItems;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -22,11 +23,11 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, OvertureMod.MODID);
 
     public static final RegistryObject<Block> ALCHEMICAL_ROSE = registerBlock("alchemical_rose",
-            () -> new FlowerBlock(() -> MobEffects.WITHER, 8,
+            () -> new AlchemicalRose(() -> MobEffects.WITHER, 8,
             BlockBehaviour.Properties.copy(Blocks.CORNFLOWER).noOcclusion().noCollission()));
 
     public static final RegistryObject<Block> POTTED_ALCHEMICAL_ROSE = BLOCKS.register("potted_alchemical_rose",
-            () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), ModBlocks.ALCHEMICAL_ROSE,
+            () -> new PottedAlchemicalRose(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), ModBlocks.ALCHEMICAL_ROSE,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_CORNFLOWER).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
