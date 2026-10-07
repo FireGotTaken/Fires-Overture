@@ -2,16 +2,23 @@ package net.fire.overture.block.custom;
 
 import net.fire.overture.block.custom.blockentity.AlchemicalRoseBlockEntity;
 import net.fire.overture.datagen.ModBlockEntities;
+import net.fire.overture.enchantment.EffectMemory;
 import net.fire.overture.event.EffectDurationTracker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -22,6 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -96,5 +104,20 @@ public class AlchemicalRose extends FlowerBlock implements EntityBlock {
 
     protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
         return super.mayPlaceOn(pState, pLevel, pPos) || pState.is(Blocks.NETHERRACK) || pState.is(Blocks.SOUL_SAND) || pState.is(Blocks.SOUL_SOIL);
+    }
+
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        ItemStack held = pPlayer.getItemInHand(pHand);
+        if (!EffectMemory.hasRoseEnchantment(held) || !held.is(Items.ENCHANTED_BOOK) || EffectMemory.getEffect(held) != null) {
+            return InteractionResult.PASS;
+        }
+        if (!(pLevel.getBlockEntity(pPos) instanceof AlchemicalRoseBlockEntity rose) || rose.getEffect() == null) {
+            return InteractionResult.PASS;
+        }
+
+        if (!pLevel.isClientSide) {
+            EffectMemory.copyFromRose(rose, held);
+        }
+        return InteractionResult.CONSUME;
     }
 }

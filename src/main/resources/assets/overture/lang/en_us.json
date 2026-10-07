@@ -1,5 +1,12 @@
 {
   "creativetab.mod_tab": "Overture",
 
-  "block.overture.alchemical_rose": "Alchemical Rose"
+  "block.overture.alchemical_rose": "Alchemical Rose",
+  "block.overture.potted_alchemical_rose": "Potted Alchemical Rose",
+
+  "enchantment.overture.jinx": "Jinx",
+  "enchantment.overture.satiation": "Satiation",
+
+  "enchantment.overture.jinx.desc": "Applies it's imbued effect to your enemies.",
+  "enchantment.overture.satiation.desc": "Permanently grants it's imbued effect."
 }

@@ -26,9 +26,9 @@ public class AlchemicalRoseBlockEntity extends BlockEntity {
     private MobEffect effect;
     private int amplifier;
     private int duration = 40;
-    private static final String EFFECT_KEY = "Effect";
-    private static final String AMPLIFIER_KEY = "Amplifier";
-    private static final String DURATION_KEY = "Duration";
+    public static final String EFFECT_KEY = "Effect";
+    public static final String AMPLIFIER_KEY = "Amplifier";
+    public static final String DURATION_KEY = "Duration";
 
     public void remember(MobEffect pEffect, int pAmplifier, int pDuration) {
         if (this.effect != null) {
@@ -56,7 +56,7 @@ public class AlchemicalRoseBlockEntity extends BlockEntity {
         return this.amplifier;
     }
 
-    private void writeEffect(CompoundTag pTag) {
+    public void writeEffect(CompoundTag pTag) {
         if (this.effect != null) {
             ResourceLocation key = ForgeRegistries.MOB_EFFECTS.getKey(this.effect);
             if (key != null) {
